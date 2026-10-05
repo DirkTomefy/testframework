@@ -1,7 +1,7 @@
 #!/bin/bash
 
 APP_NAME="test"
-TOMCAT_PATH="/home/tomefy/Documents/tomcat"
+TOMCAT_PATH="/home/tomefy/Documents/deploy/tomcat"
 
 echo "=========================================="
 echo "  DEPLOIEMENT : $APP_NAME"
