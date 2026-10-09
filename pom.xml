@@ -22,6 +22,8 @@
         <jakarta.servlet.version>6.0.0</jakarta.servlet.version>
         <h2.version>2.2.224</h2.version>
         <logback.version>1.5.13</logback.version>
+        <hikari.version>5.1.0</hikari.version>
+        <jackson.version>2.17.0</jackson.version>
     </properties>
 
     <dependencies>
@@ -63,6 +65,25 @@
             <version>${hibernate.version}</version>
         </dependency>
 
+        <!-- =========== POOL DE CONNEXIONS =========== -->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>${hikari.version}</version>
+        </dependency>
+
+        <!-- =========== JACKSON (utilisé par dirkfw pour @JsonResponse) =========== -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
         <!-- =========== BASE DE DONNÉES (H2) =========== -->
         <dependency>
             <groupId>com.h2database</groupId>
@@ -93,7 +114,6 @@
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -114,6 +134,11 @@
                 <version>3.13.0</version>
                 <configuration>
                     <release>${maven.compiler.release}</release>
+                    <compilerArgs>
+                        <!-- CRUCIAL pour que parameter.getName() renvoie
+                             "user", "message", ... au lieu de "arg0", "arg1". -->
+                        <arg>-parameters</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
         </plugins>
