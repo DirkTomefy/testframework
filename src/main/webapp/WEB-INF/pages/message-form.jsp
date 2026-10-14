@@ -40,15 +40,25 @@
 
 <h1>Créer plusieurs messages</h1>
 
-<form action="${pageContext.request.contextPath}/api/message/create" method="post">
+<form action="${pageContext.request.contextPath}/api/message/create"
+      method="post"
+      enctype="multipart/form-data">
 
     <fieldset>
         <legend>Utilisateur (commun)</legend>
+
         <label for="userName">Nom</label>
         <input type="text" id="userName" name="user.name" required>
 
         <label for="userEmail">Email</label>
         <input type="email" id="userEmail" name="user.email" required>
+
+        <label for="userCin">CIN</label>
+        <input type="text" id="userCin" name="user.cin" required>
+
+        <label for="userCinFile">Scan CIN (PDF / image)</label>
+        <input type="file" id="userCinFile" name="user.cinFile"
+               accept="image/*,application/pdf">
     </fieldset>
 
     <fieldset>
@@ -85,6 +95,7 @@
             <tr>
                 <th>ID</th>
                 <th>Utilisateur</th>
+                <th>CIN</th>
                 <th>Catégorie</th>
                 <th>Titre</th>
                 <th>Contenu</th>
@@ -98,6 +109,11 @@
                 <td>
                     <% if (m.getUser() != null) { %>
                         <%= m.getUser().getName() %>
+                    <% } else { %>-<% } %>
+                </td>
+                <td>
+                    <% if (m.getUser() != null && m.getUser().getCin() != null) { %>
+                        <%= m.getUser().getCin() %>
                     <% } else { %>-<% } %>
                 </td>
                 <td><%= m.getCategory() != null ? m.getCategory().getName() : "-" %></td>
@@ -127,7 +143,6 @@
         nextIndex++;
     }
 
-    // Un premier bloc par défaut
     addMessage();
 </script>
 

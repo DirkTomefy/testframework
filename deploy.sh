@@ -1,14 +1,14 @@
 #!/bin/bash
 
 APP_NAME="test"
-TOMCAT_PATH="/home/tomefy/Documents/deploy/tomcat"
+TOMCAT_PATH="/home/tomefydirk/Documents/deploy/tomcat"
 
 echo "=========================================="
 echo "  DEPLOIEMENT : $APP_NAME"
 echo "=========================================="
 
 echo "--- Étape 1 : Génération du WAR ---"
-./mvnw clean package -DskipTests
+mvn clean package -DskipTests
 
 if [ $? -ne 0 ]; then
     echo "❌ Erreur : La compilation Maven a échoué."

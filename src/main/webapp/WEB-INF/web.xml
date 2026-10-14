@@ -13,32 +13,30 @@
         <param-value>.jsp</param-value>
     </context-param>
 
- <context-param>
+    <context-param>
         <param-name>SPRING_CONFIGURATION</param-name>
         <param-value>com.test.config.DatabaseConfig</param-value>
     </context-param>
 
     <context-param>
-        <param-name>contextClass</param-name>
-        <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
-    </context-param>
-    
-     <context-param>
         <param-name>CONTROLLER_PACKAGE</param-name>
         <param-value>com.test.controller</param-value>
     </context-param>
 
-
     <servlet>
-    <servlet-name>FrontServletController</servlet-name>
-    <servlet-class>com.dirkfw.servlet.FrontServletController</servlet-class>
-</servlet>
-    
+        <servlet-name>FrontServletController</servlet-name>
+        <servlet-class>com.dirkfw.servlet.FrontServletController</servlet-class>
+
+        <multipart-config>
+            <max-file-size>5242880</max-file-size>
+            <max-request-size>10485760</max-request-size>
+            <file-size-threshold>0</file-size-threshold>
+        </multipart-config>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>FrontServletController</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-
-   
 
 </web-app>
