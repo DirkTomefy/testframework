@@ -28,11 +28,11 @@
 
     <dependencies>
         <!-- =========== DIRKFW FRAMEWORK =========== -->
-        <dependency>
-            <groupId>com.dirkfw</groupId>
-            <artifactId>springscratch</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+     <dependency>
+    <groupId>com.dirkfw</groupId>
+    <artifactId>springscratch</artifactId>
+    <version>1.0-SNAPSHOT</version>
+</dependency>
 
         <!-- =========== SPRING FRAMEWORK =========== -->
         <dependency>
