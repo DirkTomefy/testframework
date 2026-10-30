@@ -53,6 +53,53 @@ public class AuthController {
         return mv;
     }
 
+    private User findOrCreate(ApplicationContext ctx, String name) {
+        UserRepository repo = repo(ctx);
+        return repo.findFirstByName(name).orElseGet(() -> {
+            User u = new User();
+            u.setName(name);
+            u.setEmail(name.toLowerCase() + "@test.local");
+            return repo.save(u);
+        });
+    }
+
+    @JsonResponse
+    @UrlMapping("/connectAsAdmin")
+    public String connectAsAdmin(ApplicationContext ctx, DfwSession session) {
+        session.setAttribute("user", findOrCreate(ctx, "admin"));
+        session.setAttribute("role", "ADMIN");
+        return "OK";
+    }
+
+    @JsonResponse
+    @UrlMapping("/connectAsSimpleUser")
+    public String connectAsSimpleUser(ApplicationContext ctx, DfwSession session) {
+        session.setAttribute("user", findOrCreate(ctx, "simple"));
+        session.setAttribute("role", "USER");
+        return "OK";
+    }
+
+    @JsonResponse
+    @SessionRequired(value = "ADMIN")
+    @UrlMapping("/api/role/admin")
+    public String adminOnly() {
+        return "admin zone";
+    }
+
+    @JsonResponse
+    @SessionRequired(value = "USER")
+    @UrlMapping("/api/role/user")
+    public String userOnly() {
+        return "user zone";
+    }
+
+    @JsonResponse
+    @SessionRequired(value = { "ADMIN", "USER" })
+    @UrlMapping("/api/role/any")
+    public String anyRole() {
+        return "any role zone";
+    }
+
     @JsonResponse
     @SessionRequired
     @UrlMapping("/api/me")
@@ -64,6 +111,7 @@ public class AuthController {
     @UrlMapping(value = "/api/logout", httpMethod = UrlHTTPMethod.POST)
     public String logout(DfwSession session) {
         session.removeAttribute("user");
+        session.removeAttribute("role");
         return "OK";
     }
 }
